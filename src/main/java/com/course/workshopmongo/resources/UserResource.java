@@ -48,4 +48,11 @@ public class UserResource {
 
     }
 
+    @Operation(summary = "Deletar usuário", description = "Deletar usuário pelo ID")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
