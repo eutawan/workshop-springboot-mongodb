@@ -21,7 +21,6 @@ public class UserService {
 
     public User findById(String id) {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado"));
-
     }
 
     public User insert(User obj) {
@@ -30,6 +29,17 @@ public class UserService {
 
     public void delete(String id) {
         repository.deleteById(id);
+    }
+
+    public User update(User obj) {
+        User newObj = repository.findById(obj.getId()).orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado"));
+        updateData(newObj, obj);
+        return repository.save(newObj);
+    }
+
+    private void updateData(User newObj, User obj) {
+        newObj.setName(obj.getName());
+        newObj.setEmail(obj.getEmail());
     }
 
     public User fromDTO(UserDTO objDto) {
