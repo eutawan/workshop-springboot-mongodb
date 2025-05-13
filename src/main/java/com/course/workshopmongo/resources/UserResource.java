@@ -1,5 +1,6 @@
 package com.course.workshopmongo.resources;
 
+import com.course.workshopmongo.domain.Post;
 import com.course.workshopmongo.domain.User;
 import com.course.workshopmongo.dto.UserDTO;
 import com.course.workshopmongo.services.UserService;
@@ -9,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,5 +62,13 @@ public class UserResource {
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "Buscar posts", description = "Buscar posts de um usuário por ID")
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
+    }
+
 
 }
